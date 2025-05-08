@@ -1,10 +1,12 @@
 //import { Link } from 'react-router-dom'
 
 import React from 'react'
+import '../styles/landing.css'
 
 const Landing = () => {
   const content = (
     <section>
+        {/* <script src="https://kit.fontawesome.com/3f153ad2ee.js" crossorigin="anonymous"></script> */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"></link>
         <nav class="navbar">
             <div class="navbar__container">
