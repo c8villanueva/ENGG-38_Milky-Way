@@ -18,31 +18,31 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
-  const {username, password, roles } = req.body
+  const {name, email, password, roles } = req.body
 
   // Confirm data
-  if (!username || !password) {
+  if (!name || !password || !email) {
     return res.status(400).json({ message: 'All fields are required' })
   } // if there are any other errors, the async handler should ba able to take care of it, this is mainly so that the specific message can be given on the frontend to actually help the user
 
   // Check for duplicate
-  const duplicate = await User.findOne({ username }).lean().exec()
+  const duplicate = await User.findOne({ email }).lean().exec()
   if (duplicate) {
-    return res.status(409).json({ message: 'Duplicate username' })
+    return res.status(409).json({ message: 'User already created with that email' })
   }
 
   // Hash password
   const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
   
   const userObject = (!Array.isArray(roles) || !roles.length)
-    ? { username, "password": hashedPwd }
-    : { username, "password": hashedPwd, roles }
+    ? { name, email, "password": hashedPwd }
+    : { name, email, "password": hashedPwd, roles }
 
   // Create and store new user
   const user = await User.create(userObject)
 
   if (user) { //created
-    res.status(201).json({ message: `New user ${username} created`})
+    res.status(201).json({ message: `New user ${name} created`})
   } else {
     res.status(400).json({ message: "Invalid user data received" })
   }
@@ -52,10 +52,10 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, username, roles, active, password } = req.body
+  const { id, name, email, roles, password } = req.body
 
   // Confirm data 
-  if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
+  if (!id || !email || !name || !Array.isArray(roles) || !roles.length) {
       return res.status(400).json({ message: 'All fields except password are required' })
   }
 
@@ -67,17 +67,17 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   // Check for duplicate 
-  const duplicate = await User.findOne({ username }).lean().exec()
+  const duplicate = await User.findOne({ email }).lean().exec()
   // checks for case insensitivity
 
   // Allow updates to the original user 
   if (duplicate && duplicate?._id.toString() !== id) {
-      return res.status(409).json({ message: 'Duplicate username' })
+      return res.status(409).json({ message: 'Duplicate email' })
   }
 
-  user.username = username
+  user.name = name
   user.roles = roles
-  user.active = active
+  user.email = email
 
   if (password) {
       // Hash password 
@@ -86,7 +86,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
   const updatedUser = await user.save()
 
-  res.json({ message: `${updatedUser.username} updated` })
+  res.json({ message: `${updatedUser.email} updated` })
 })
 
 // @desc Delete a user
