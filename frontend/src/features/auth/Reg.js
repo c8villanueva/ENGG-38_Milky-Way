@@ -93,9 +93,6 @@ const Reg = () => {
         href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"
       ></link>
 
-      <p className={errClass}>{error?.data?.message}</p>
-
-
       <nav class="navbar">
         <div class="navbar__container">
           <a href="landing.html" id="navbar__logo">
@@ -115,6 +112,10 @@ const Reg = () => {
           </ul>
         </div>
       </nav>
+
+
+      <p className={errClass}>{error?.data?.message}</p>
+
 
       <div class="container">
         <div class="form-box active" id="signup-form">
@@ -144,7 +145,7 @@ const Reg = () => {
               className={`form__input ${validEmailClass}`}
               id="email"
               name="email"
-              type="text"
+              type="email"
               autoComplete="off"
               value={email}
               onChange={onEmailChanged}
