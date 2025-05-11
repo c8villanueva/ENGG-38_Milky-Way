@@ -202,17 +202,7 @@ const Workspace = () => {
             <li><button onClick={clearWorkspace}>clear</button></li>
             <li><button onClick={saveWorkspace}>save</button></li>
             <li><button onClick={loadWorkspace}>load</button></li>
-
-            {/* <li><button onClick={logoutButton}>log out</button></li> */}
-            <li>
-              <button
-              className="icon-button"
-              title="Logout"
-              onClick={sendLogout}
-              >
-                {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}log out
-              </button>
-            </li>
+            <li><button onClick={sendLogout}>log out</button></li>
 
           </ul>
         </div>
