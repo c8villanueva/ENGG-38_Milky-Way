@@ -96,8 +96,8 @@ const Login = () => {
               name="email" 
               placeholder="Email" 
               ref={userRef}
-              value={username}
-              onChange={handleUserInput}
+              value={email}
+              onChange={handleEmailInput}
               autoComplete="off"
               required
             />
