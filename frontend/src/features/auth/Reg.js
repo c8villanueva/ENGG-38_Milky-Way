@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { ROLES } from "../../config/roles";
+import { Link } from "react-router-dom";
 
 const NAME_REGEX = /^[A-z]{3,20}$/;
 const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/;
@@ -95,9 +96,12 @@ const Reg = () => {
 
       <nav class="navbar">
         <div class="navbar__container">
-          <a href="landing.html" id="navbar__logo">
+          {/* <a href="landing.html" id="navbar__logo">
             <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
-          </a>
+          </a> */}
+          <li id="navbar__logo">
+              <Link to="/">Milky Way</Link>
+          </li>
           <div class="navbar__toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -105,9 +109,7 @@ const Reg = () => {
           </div>
           <ul class="navbar__menu">
             <li class="navbar__btn">
-              <a href="landing.html" class="button">
-                home
-              </a>
+              <Link to="/" class="button">Home</Link>
             </li>
           </ul>
         </div>
@@ -195,7 +197,7 @@ const Reg = () => {
               <FontAwesomeIcon icon={faSave} />Sign Up
             </button>
             <p>
-              Already have an account? <a href="login.html">Login</a>
+              Already have an account? <Link to="/auth">Log In</Link>
             </p>
           </form>
 

@@ -70,9 +70,12 @@ const Login = () => {
         
       <nav class="navbar">
         <div class="navbar__container">
-          <a href="landing.html" id="navbar__logo">
+          {/* <a href="landing.html" id="navbar__logo">
             <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
-          </a>
+          </a> */}
+          <li id="navbar__logo">
+              <Link to="/">Milky Way</Link>
+          </li>
           <div class="navbar__toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -80,7 +83,7 @@ const Login = () => {
           </div>
           <ul class="navbar__menu">
             <li class="navbar__btn">
-              <a href="landing.html" class="button">home</a>
+              <Link to="/" class="button">Home</Link>
             </li>
           </ul>
         </div>
@@ -129,7 +132,9 @@ const Login = () => {
               Trust This Device
             </label>
 
-            <p>Don't have an account? <a href="reg.html">Sign Up</a></p>
+            <p>
+              Don't have an account? <Link to="/users">Sign Up</Link>
+            </p>
           </form>
         </div>
       </div>

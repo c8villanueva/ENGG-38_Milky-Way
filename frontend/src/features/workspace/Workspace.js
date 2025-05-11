@@ -39,14 +39,28 @@ export default function Workspace(){
     error
   }] = useSendLogoutMutation()
 
-  useEffect(() => { if (isSuccess) navigate('/') }, [isSuccess, navigate])
-                    if (isLoading) return <p>Logging Out...</p>
-                    if (isError) return <p>Error: {error.data?.message}</p>
+  useEffect(() => {
+    console.log("isLoading:", isLoading);
+    console.log("isSuccess:", isSuccess);
+    console.log("isError:", isError);
+    if (isSuccess) navigate('/') }, [isSuccess, navigate])
+  if (isLoading) return <p>Logging Out...</p>
+  if (isError) return <p>Error: {error.data?.message}</p>
 
   let dashClass = null
   if (!WORKSPACE_REGEX.test(pathname)) {
     dashClass = "dash-header__container--small"
   }
+
+  const handleLogout = async () => {
+    try {
+      const result = await sendLogout().unwrap();
+      console.log('Logout successful:', result);
+      navigate('/')
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
 
   // end of logout code
 
@@ -356,11 +370,16 @@ export default function Workspace(){
 
   return (
     <section>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"></link>
+
       <nav className="navbar">
         <div className="navbar__container">
-          <a href="/" id="navbar__logo">
+          {/* <a href="/" id="navbar__logo">
             <i className="fa-solid fa-rocket">&nbsp;</i> Milky Way
-          </a>
+          </a> */}
+          <li id="navbar__logo">
+              <Link to="/">Milky Way</Link>
+          </li>
           <ul className="navbar__menu">
             <li><button onClick={changeLayout}>[]</button></li>
             <li><button onClick={()=>addElement('text')}>text</button></li>
@@ -381,7 +400,9 @@ export default function Workspace(){
                 <button onClick={clearWorkspace}>clear</button>
                 <button onClick={saveWorkspace}>save</button>
                 <button onClick={loadWorkspace}>load</button>
-                <button onClick={()=>sendLogout()}>logout</button>
+                {/* <button onClick={sendLogout}>logout</button> */}
+                <button onClick={handleLogout}>logout</button>
+                {/* <button onClick={async () => await sendLogout()}>logout</button> */}
               </div>
             </li>
           </ul>

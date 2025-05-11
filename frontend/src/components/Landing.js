@@ -2,6 +2,7 @@
 
 import React from 'react'
 import '../styles/landing.css'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   const content = (
@@ -10,9 +11,12 @@ const Landing = () => {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"></link>
         <nav class="navbar">
             <div class="navbar__container">
-                <a href="landing.html" id="navbar__logo">
+                {/* <a href="landing.html" id="navbar__logo">
                     <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
-                </a>
+                </a> */}
+                <li id="navbar__logo">
+                    <Link to="/">Milky Way</Link>
+                </li>
                 <div class="navbar__toggle" id="mobile-menu">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -20,7 +24,7 @@ const Landing = () => {
                 </div>
                 <ul class="navbar__menu">
                     <li class="navbar__btn">
-                        <a href="login.html" class="button">login</a>
+                        <Link to="/auth" className="button">Log In</Link>
                     </li>
                 </ul>
             </div>
@@ -31,7 +35,11 @@ const Landing = () => {
                 <div class="main__content">
                     <h1>Milky Way</h1>
                     <h2>Your Personalized Workspace</h2>
-                    <button class="main__btn"><a href="workspace.html">Create New Workspace</a></button>
+                    <button class="main__btn">
+                        <li class="navbar__btn">
+                            <Link to="/workspace">Open Your Workspace</Link>
+                        </li>
+                    </button>
                 </div>
                 <div class="main__img--container">
                     {/* <img src="images/workspace_preview.png" alt="pic" id="main__img"></img> */}
