@@ -50,15 +50,6 @@ const Workspace = () => {
     dashClass = "dash-header__container--small"
   }
 
-  // const logoutButton = (
-  //   <button
-  //     className="icon-button"
-  //     title="Logout"
-  //     onClick={sendLogout}
-  //   >
-  //     {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}
-  //   </button>
-  // )
   // end of logout code
 
   
