@@ -168,6 +168,7 @@ export default function Workspace() {
         )}
         {el.type === 'timer' && <Timer id={el.id} element={el} updateElement={updateElement} />}
         {el.type === 'list' && <TodoList id={el.id} content={el.content} updateElement={updateElement} />}
+        
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
           <input type="color"
             value={el.type === 'text' ? el.textColor : el.color}
@@ -277,87 +278,104 @@ export default function Workspace() {
 
   //list
   function TodoList({ id, content, updateElement }) {
-    const [items, setItems] = useState(() => {
-      try {
-        return content ? JSON.parse(content) : [];
-      } catch {
-        return [];
-      }
-    });
-    const [input, setInput] = useState("");
-    const inputRef = useRef(null);
+  const [items, setItems] = useState(() => {
+    try {
+      return content ? JSON.parse(content) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [inputText, setInputText] = useState("");
+  const [inputDate, setInputDate] = useState("");
+  const inputRef = useRef(null);
 
-    useEffect(() => {
-      if (updateElement) {
-        updateElement(id, el => ({
-          ...el,
-          content: JSON.stringify(items),
-        }));
-      }
-    }, [items, id, updateElement]);
+  useEffect(() => {
+    if (updateElement) {
+      updateElement(id, el => ({
+        ...el,
+        content: JSON.stringify(items),
+      }));
+    }
+  }, [items, id, updateElement]);
 
-    const addItem = () => {
-      const trimmed = input.trim();
-      if (!trimmed || items.some(item => item.text === trimmed)) return;
-      setItems(prev => [...prev, { text: trimmed, checked: false }]);
-      setInput("");
-      inputRef.current.focus();
-    };
+  const addItem = () => {
+    const trimmedText = inputText.trim();
+    if (!trimmedText || items.some(item => item.text === trimmedText)) return;
+    setItems(prev => [...prev, { text: trimmedText, date: inputDate, checked: false }]);
+    setInputText("");
+    setInputDate("");
+    inputRef.current?.focus();
+  };
 
-    const toggleCheck = index => {
-      setItems(prev =>
-        prev.map((item, i) =>
-          i === index ? { ...item, checked: !item.checked } : item
-        )
-      );
-    };
-
-    const deleteItem = index => {
-      setItems(prev => prev.filter((_, i) => i !== index));
-    };
-
-    return (
-      <div className="list-container p-2 space-y-2">
-        <div className="flex gap-2">
-          <input
-            className="todo-input border rounded p-1 w-full"
-            type="text"
-            placeholder="Add new item..."
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && addItem()}
-            onMouseDown={e => e.stopPropagation()}
-            ref={inputRef}
-          />
-          <button onClick={addItem} className="addBtn px-3 text-xl rounded bg-blue-500 text-white">
-            +
-          </button>
-        </div>
-        <ul className="todo-list space-y-1">
-          {items.map((item, index) => (
-            <li
-              key={index}
-              className={`flex justify-between items-center px-2 py-1 border rounded cursor-pointer ${item.checked ? "line-through text-gray-500" : ""
-                }`}
-              onClick={() => toggleCheck(index)}
-            >
-              <span className="item-text">{item.text}</span>
-              <span
-                className="delBtn ml-4 text-red-500 hover:text-red-700 text-xl"
-                onClick={e => {
-                  e.stopPropagation();
-                  deleteItem(index);
-                }}
-              >
-                &times;
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+  const toggleCheck = index => {
+    setItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, checked: !item.checked } : item
+      )
     );
-  }
+  };
 
+  const deleteItem = index => {
+    setItems(prev => prev.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="list-container p-2 space-y-2"
+         onMouseDown={e => e.stopPropagation()}
+         onTouchStart={e => e.stopPropagation()}>
+      <div className="flex gap-2">
+        <input
+          className="todo-input border rounded p-1 w-full"
+          type="text"
+          placeholder="Add new item..."
+          value={inputText}
+          onChange={e => setInputText(e.target.value)}
+          onKeyDown={e => {
+            e.stopPropagation();
+            if (e.key === "Enter") addItem();
+          }}
+          onMouseDown={e => e.stopPropagation()}
+          ref={inputRef}
+        />
+        <input
+          className="date-input border rounded p-1"
+          type="date"
+          value={inputDate}
+          onChange={e => setInputDate(e.target.value)}
+          onMouseDown={e => e.stopPropagation()}
+        />
+        <button
+          onClick={e => { e.stopPropagation(); addItem(); }}
+          className="addBtn px-3 text-xl rounded bg-blue-500 text-white"
+        >
+          +
+        </button>
+      </div>
+      <ul className="todo-list space-y-1">
+        {items.map((item, index) => (
+          <li
+            key={index}
+            className={`flex justify-between items-center px-2 py-1 border rounded cursor-pointer ${item.checked ? "line-through text-gray-500" : ""}`}
+            onClick={() => toggleCheck(index)}
+          >
+            <span className="item-text">
+              {item.text}{item.date && ` - Due: ${item.date}`}
+            </span>
+            <span
+              className="delBtn ml-4 text-red-500 hover:text-red-700 text-xl"
+              onClick={e => {
+                e.stopPropagation();
+                deleteItem(index);
+              }}
+            >
+              &times;
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
   return (
     <section>
@@ -374,18 +392,18 @@ export default function Workspace() {
           <ul className="navbar__menu">
             <li><button onClick={changeLayout}>[]</button></li>
             <li><button onClick={() => addElement('text')}>text</button></li>
-            <li className="navbar__dropdown"><button>shapes</button>
+            {/* <li className="navbar__dropdown"><button>shapes</button>
               <div className="navbar__dropdown-content">
-                <button onClick={() => addElement('circle')}>circle</button>
-                <button onClick={() => addElement('square')}>square</button>
-              </div>
-            </li>
-            <li className="navbar__dropdown"><button>others</button>
-              <div className="navbar__dropdown-content">
-                <button onClick={() => addElement('timer')}>timer</button>
-                <button onClick={() => addElement('list')}>list</button>
-              </div>
-            </li>
+                <button onClick={() => addElement('circle')}>circle</button> */}
+            <li><button onClick={() => addElement('square')}>square</button></li>
+            {/* </div> */}
+            {/* </li> */}
+            {/* <li className="navbar__dropdown"><button>others</button>
+              <div className="navbar__dropdown-content"> */}
+            <li><button onClick={() => addElement('timer')}>timer</button></li>
+            <li><button onClick={() => addElement('list')}>list</button></li>
+            {/* </div>
+            </li> */}
             <li className="navbar__dropdown"><button>⚙️</button>
               <div className="navbar__dropdown-content">
                 <button onClick={clearWorkspace}>clear</button>
