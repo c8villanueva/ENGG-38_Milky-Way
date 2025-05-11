@@ -12,7 +12,7 @@ function App() {
     // </div>
     <Routes>
       <Route path="/" element={<Landing />}/>
-      <Route path="login" element={<Login />} />
+      <Route path="auth" element={<Login />} />
       <Route path="users" element={<Reg />} />
       
         {/* <Route index element={<Landing />} /> ^ this will be the default */}
