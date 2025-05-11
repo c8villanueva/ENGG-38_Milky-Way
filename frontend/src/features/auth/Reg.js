@@ -44,7 +44,7 @@ const Reg = () => {
       setEmail("");
       setPassword("");
       setRoles([]);
-      navigate("/login"); //goes to /login after creating new user
+      navigate("/auth"); //goes to /login after creating new user
     }
   }, [isSuccess, navigate]);
 
@@ -173,7 +173,7 @@ const Reg = () => {
             />
 
 
-            {/* <select
+            <select
               id="roles"
               name="roles"
               className={`form__select ${validRolesClass}`}
@@ -183,7 +183,7 @@ const Reg = () => {
               onChange={onRolesChanged}
             >
               {options}
-            </select> */}
+            </select>
 
 
 

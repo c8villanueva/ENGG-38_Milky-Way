@@ -3,12 +3,16 @@ const router = express.Router()
 const usersController = require('../controllers/usersController')
 const verifyJWT = require('../middleware/verifyJWT')
 
+// Allow unauthenticated access to createNewUser
+router.route('/')
+  .post(usersController.createNewUser) // Public route for user registration
+
+// Apply verifyJWT middleware to all routes below this line
 router.use(verifyJWT)
 
-// we are already at /users
+// Protected routes
 router.route('/')
-  .get(usersController.getAllUsers) //controllers will be put here
-  .post(usersController.createNewUser)
+  .get(usersController.getAllUsers)
   .patch(usersController.updateUser)
   .delete(usersController.deleteUser)
 
