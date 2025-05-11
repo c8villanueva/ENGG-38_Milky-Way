@@ -1,0 +1,102 @@
+/* General styles for the login page */
+body {
+  font-family: 'Inclusive Sans', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #81689d;
+  padding: 10px 20px;
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo {
+  font-size: 1.5rem;
+  color: #ffd0ec;
+  text-decoration: none;
+}
+
+.navbar__menu .button {
+  background-color: #ffd0ec;
+  color: #1f2544;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Form container styles */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.form-box {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-box h2 {
+  text-align: center;
+  color: #81689d;
+  margin-bottom: 20px;
+}
+
+.form-box input[type="email"],
+.form-box input[type="text"],
+.form-box input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+
+.form-box button {
+  width: 100%;
+  padding: 10px;
+  background-color: #81689d;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.form-box button:hover {
+  background-color: #5f4a7d;
+}
+
+.form__persist {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.form__persist input {
+  margin-right: 10px;
+}
+
+.errmsg {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.offscreen {
+  display: none;
+}

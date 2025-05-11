@@ -173,7 +173,7 @@ const Reg = () => {
             />
 
 
-            <select
+            {/* <select
               id="roles"
               name="roles"
               className={`form__select ${validRolesClass}`}
@@ -183,7 +183,7 @@ const Reg = () => {
               onChange={onRolesChanged}
             >
               {options}
-            </select>
+            </select> */}
 
 
 
@@ -193,8 +193,7 @@ const Reg = () => {
               //className="icon-button"
               title="Save"
               disabled={!canSave}
-            >
-              <FontAwesomeIcon icon={faSave} />Sign Up
+            >Sign Up
             </button>
             <p>
               Already have an account? <Link to="/auth">Log In</Link>

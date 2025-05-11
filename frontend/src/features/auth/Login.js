@@ -10,6 +10,8 @@ import { useLoginMutation } from './authApiSlice'
 
 import usePersist from '../../hooks/usePersist'
 
+import '../../styles/login.css'
+
 const Login = () => {
 
   const userRef = useRef()
@@ -89,11 +91,11 @@ const Login = () => {
         </div>
       </nav>
 
-
+      
       <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
 
-      <div class="container">
+      {/* <div class="container">
         <div class="form-box active" id="login-form">
           <form onSubmit={handleSubmit}>
             <h2>Login</h2>
@@ -137,7 +139,55 @@ const Login = () => {
             </p>
           </form>
         </div>
-      </div>
+      </div> */}
+
+<div className="container">
+  <div className="form-box active" id="login-form">
+    <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="Email" 
+        ref={userRef}
+        value={email}
+        onChange={handleEmailInput}
+        autoComplete="off"
+        required
+      />
+
+      <input 
+        type="password" 
+        name="password" 
+        placeholder="Password" 
+        onChange={handlePwdInput}
+        value={password}
+        required
+      />
+
+      <button type="submit" name="login">Login</button>
+
+      <label htmlFor="persist" className="form__persist">
+        <input
+          type="checkbox"
+          className="form__checkbox"
+          id="persist"
+          onChange={handleToggle}
+          checked={persist}
+        />
+        Trust This Device
+      </label>
+
+      <p>
+        Don't have an account? <Link to="/users">Sign Up</Link>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+
     </section>
   )
   return content
