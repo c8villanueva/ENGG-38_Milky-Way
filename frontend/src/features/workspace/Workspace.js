@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
+
+import { useSendLogoutMutation } from '../auth/authApiSlice';
+
+// const DASH_REGEX = /^\/dash(\/)?$/
+const WORKSPACE_REGEX = /^\/workspace(\/)?$/
+// const NOTES_REGEX = /^\/dash\/notes(\/)?$/
+// const USERS_REGEX = /^\/dash\/users(\/)?$/
 
 const defaultStyles = {
   position: 'absolute',
@@ -8,6 +16,10 @@ const defaultStyles = {
 };
 
 const Workspace = () => {
+
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   const [elements, setElements] = useState([]);
   const [isGrid, setIsGrid] = useState(true);
   const workspaceRef = useRef(null);
@@ -15,6 +27,48 @@ const Workspace = () => {
   useEffect(() => {
     loadWorkspace();
   }, []);
+
+
+  // Logout code
+  const [sendLogout, {
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  }] = useSendLogoutMutation()
+
+  useEffect(() => {
+    if (isSuccess) navigate('/')
+  }, [isSuccess, navigate])
+
+  if (isLoading) return <p>Logging Out...</p>
+
+  if (isError) return <p>Error: {error.data?.message}</p>
+
+  let dashClass = null
+  if (!WORKSPACE_REGEX.test(pathname)) {
+    dashClass = "dash-header__container--small"
+  }
+
+  // const logoutButton = (
+  //   <button
+  //     className="icon-button"
+  //     title="Logout"
+  //     onClick={sendLogout}
+  //   >
+  //     {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}
+  //   </button>
+  // )
+  // end of logout code
+
+  
+  // const [elements, setElements] = useState([]);
+  // const [isGrid, setIsGrid] = useState(true);
+  // const workspaceRef = useRef(null);
+
+  // useEffect(() => {
+  //   loadWorkspace();
+  // }, []);
 
   const changeLayout = () => {
     setIsGrid(prev => !prev);
@@ -157,6 +211,18 @@ const Workspace = () => {
             <li><button onClick={clearWorkspace}>clear</button></li>
             <li><button onClick={saveWorkspace}>save</button></li>
             <li><button onClick={loadWorkspace}>load</button></li>
+
+            {/* <li><button onClick={logoutButton}>log out</button></li> */}
+            <li>
+              <button
+              className="icon-button"
+              title="Logout"
+              onClick={sendLogout}
+              >
+                {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}log out
+              </button>
+            </li>
+
           </ul>
         </div>
       </nav>
