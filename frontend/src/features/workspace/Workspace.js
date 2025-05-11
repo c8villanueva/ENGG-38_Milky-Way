@@ -6,10 +6,7 @@ import { useSendLogoutMutation } from '../auth/authApiSlice';
 
 // import './workspace.css';
 
-// const DASH_REGEX = /^\/dash(\/)?$/
 const WORKSPACE_REGEX = /^\/workspace(\/)?$/
-// const NOTES_REGEX = /^\/dash\/notes(\/)?$/
-// const USERS_REGEX = /^\/dash\/users(\/)?$/
 
 const defaultStyles = {
   position: 'absolute',
@@ -63,14 +60,6 @@ export default function Workspace(){
   };
 
   // end of logout code
-
-  // const [elements, setElements] = useState([]);
-  // const [isGrid, setIsGrid] = useState(true);
-  // const workspaceRef = useRef(null);
-
-  // useEffect(() => {
-  //   loadWorkspace();
-  // }, []);
 
   //background toggle
   const changeLayout = () => {
