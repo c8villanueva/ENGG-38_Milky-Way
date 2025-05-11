@@ -6,7 +6,7 @@ import { useSendLogoutMutation } from '../auth/authApiSlice';
 
 // import './workspace.css';
 
-const WORKSPACE_REGEX = /^\/workspace(\/)?$/
+// const WORKSPACE_REGEX = /^\/workspace(\/)?$/
 
 const defaultStyles = {
   position: 'absolute',
@@ -17,7 +17,7 @@ const defaultStyles = {
 export default function Workspace(){
 
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  // const { pathname } = useLocation()
 
   const [elements, setElements] = useState([]);
   const [isGrid, setIsGrid] = useState(true);
@@ -44,10 +44,10 @@ export default function Workspace(){
   if (isLoading) return <p>Logging Out...</p>
   if (isError) return <p>Error: {error.data?.message}</p>
 
-  let dashClass = null
-  if (!WORKSPACE_REGEX.test(pathname)) {
-    dashClass = "dash-header__container--small"
-  }
+  // let dashClass = null
+  // if (!WORKSPACE_REGEX.test(pathname)) {
+  //   dashClass = "dash-header__container--small"
+  // }
 
   const handleLogout = async () => {
     try {
