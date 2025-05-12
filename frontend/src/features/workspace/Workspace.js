@@ -168,7 +168,9 @@ export default function Workspace() {
             {el.content}
           </p>
         )}
+
         {el.type === 'timer' && <Timer id={el.id} element={el} updateElement={updateElement} />}
+        
         {el.type === 'list' && <TodoList id={el.id} listItems={el.listItems} updateElement={updateElement} />}
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
@@ -192,67 +194,71 @@ export default function Workspace() {
   // timer
   function Timer({ id, element, updateElement }) {
     const intervalRef = useRef(null);
-    const { timeLeft = 1500, isRunning = false, isPaused = false } = element || {};
+
+    const timeLeft = element.timeLeft ?? 1500;
+    const isRunning = element.isRunning ?? false;
+    const isPaused = element.isPaused ?? false;
+    const sessionType = element.sessionType ?? null;
 
     useEffect(() => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
 
-        if (isRunning && !isPaused) {
-            intervalRef.current = setInterval(() => {
-                updateElement(id, prev => {
-                    const currentTime = prev.timeLeft ?? 1500;
-                    if (currentTime <= 1) {
-                        clearInterval(intervalRef.current);
-                        const message = prev.sessionType === 'study'
-                            ? 'Study session done! Time for a break.'
-                            : 'Break is over! Time to get back to work.';
-                        alert(message);
-                        return {
-                            ...prev,
-                            timeLeft: 0,
-                            isRunning: false,
-                            isPaused: false // Reset paused state when timer ends
-                        };
-                    }
-                    return {
-                        ...prev,
-                        timeLeft: currentTime - 1
-                    };
-                });
-            }, 1000);
-        }
+      if (isRunning && !isPaused) {
+        intervalRef.current = setInterval(() => {
+          updateElement(id, prev => {
+            const currentTime = prev.timeLeft ?? 1500;
+            if (currentTime <= 1) {
+              clearInterval(intervalRef.current);
+              const message = prev.sessionType === 'study'
+                ? 'Study session done! Time for a break.'
+                : 'Break is over! Time to get back to work.';
+              alert(message);
+              return {
+                ...prev,
+                timeLeft: 0,
+                isRunning: false,
+                isPaused: false
+              };
+            }
+            return {
+              ...prev,
+              timeLeft: currentTime - 1
+            };
+          });
+        }, 1000);
+      }
 
-        return () => clearInterval(intervalRef.current);
+      return () => clearInterval(intervalRef.current);
     }, [isRunning, isPaused, id, updateElement]);
 
     const start = (duration, type) => {
-        updateElement(id, prev => ({
-            ...prev,
-            timeLeft: duration,
-            sessionType: type,
-            isRunning: true,
-            isPaused: false
-        }));
+      updateElement(id, prev => ({
+        ...prev,
+        timeLeft: duration,
+        sessionType: type,
+        isRunning: true,
+        isPaused: false
+      }));
     };
 
     const togglePause = () => {
-        updateElement(id, prev => ({
-            ...prev,
-            isPaused: !prev.isPaused
-        }));
+      updateElement(id, prev => ({
+        ...prev,
+        isPaused: !prev.isPaused
+      }));
     };
 
     const reset = () => {
-        clearInterval(intervalRef.current);
-        updateElement(id, prev => ({
-            ...prev,
-            timeLeft: 1500,
-            isRunning: false,
-            isPaused: false,
-            sessionType: null // Reset session type on reset
-        }));
+      clearInterval(intervalRef.current);
+      updateElement(id, prev => ({
+        ...prev,
+        timeLeft: 1500,
+        isRunning: false,
+        isPaused: false,
+        sessionType: null
+      }));
     };
 
     const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');

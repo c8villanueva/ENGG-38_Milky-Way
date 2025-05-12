@@ -173,7 +173,14 @@
     background-color: #aaa;
 }
 
+/* text box */
 .text {
+    min-width: 40px;
+    min-height: 40px;
+}
+
+/* shape box */
+.square {
     min-width: 40px;
     min-height: 40px;
 }
