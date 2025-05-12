@@ -169,7 +169,7 @@ export default function Workspace() {
           </p>
         )}
         {el.type === 'timer' && <Timer id={el.id} element={el} updateElement={updateElement} />}
-        {el.type === 'list' && <TodoList id={el.id} content={el.content} updateElement={updateElement} />}
+        {el.type === 'list' && <TodoList id={el.id} listItems={el.listItems} updateElement={updateElement} />}
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
           <input 
@@ -279,96 +279,81 @@ export default function Workspace() {
     );
   }
 
-  //list with due date
-  function TodoList({ id, content, updateElement }) {
-  const [items, setItems] = useState(() => {
-    try {
-      return content ? JSON.parse(content) : [];
-    } catch {
-      return [];
-    }
-  });
-  const [inputText, setInputText] = useState("");
-  const [inputDate, setInputDate] = useState("");
-  const inputRef = useRef(null);
+  //list with date
+  function TodoList({ id, listItems = [], updateElement }) {
+    const [inputText, setInputText] = useState("");
+    const [inputDate, setInputDate] = useState("");
+    const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (updateElement) {
+    const addItem = () => {
+      const trimmedText = inputText.trim();
+      if (!trimmedText || !inputDate) return;
+
+      const newItem = {
+        id: uuidv4(),
+        text: trimmedText,
+        date: inputDate,
+        completed: false,
+      };
+
       updateElement(id, el => ({
         ...el,
-        content: JSON.stringify(items),
+        listItems: [...(el.listItems || []), newItem],
       }));
-    }
-  }, [items, id, updateElement]);
 
-  const addItem = () => {
-    const trimmedText = inputText.trim();
-    if (!trimmedText || !inputDate) return;
-
-    const newItem = {
-      id: uuidv4(),
-      text: trimmedText,
-      date: inputDate,
-      completed: false,
+      setInputText("");
+      setInputDate("");
+      if (inputRef.current) inputRef.current.focus();
     };
 
-    setItems(prev => [...prev, newItem]);
-    setInputText("");
-    setInputDate("");
-    if (inputRef.current) inputRef.current.focus();
-  };
+    const toggleCheck = itemId => {
+      updateElement(id, el => ({
+        ...el,
+        listItems: el.listItems.map(item =>
+          item.id === itemId ? { ...item, completed: !item.completed } : item
+        ),
+      }));
+    };
 
+    const deleteItem = itemId => {
+      updateElement(id, el => ({
+        ...el,
+        listItems: el.listItems.filter(item => item.id !== itemId),
+      }));
+    };
 
-  const toggleCheck = index => {
-    setItems(prev =>
-      prev.map((item, i) =>
-        i === index ? { ...item, checked: !item.checked } : item
-      )
-    );
-  };
-
-  const deleteItem = index => {
-    setItems(prev => prev.filter((_, i) => i !== index));
-  };
-
-  return (
-    <div>
-      <div style={{ display: 'flex', gap: '5px' }}>
-        <input
-          ref={inputRef}
-          value={inputText}
-          onChange={e => setInputText(e.target.value)}
-          placeholder="Add task here"
-        />
-        <input
-          type="date"
-          value={inputDate}
-          onChange={e => setInputDate(e.target.value)}
-        />
-        <button onClick={addItem}>+</button>
+    return (
+      <div>
+        <div style={{ display: 'flex', gap: '5px' }}>
+          <input
+            ref={inputRef}
+            value={inputText}
+            onChange={e => setInputText(e.target.value)}
+            placeholder="Add task here"
+          />
+          <input
+            type="date"
+            value={inputDate}
+            onChange={e => setInputDate(e.target.value)}
+          />
+          <button onClick={addItem}>+</button>
+        </div>
+        <ul>
+          {listItems.map(item => (
+            <li key={item.id} style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
+              <input
+                type="checkbox"
+                checked={item.completed}
+                onChange={() => toggleCheck(item.id)}
+              />
+              {item.text} – <em>{item.date}</em>
+              <button onClick={() => deleteItem(item.id)}>x</button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {items.map(item => (
-          <li key={item.id} style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
-            <input
-              type="checkbox"
-              checked={item.completed}
-              onChange={() =>
-                setItems(prev =>
-                  prev.map(i =>
-                    i.id === item.id ? { ...i, completed: !i.completed } : i
-                  )
-                )
-              }
-            />
-            {item.text} – <em>{item.date}</em>
-            <button onClick={() => setItems(prev => prev.filter(i => i.id !== item.id))}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+    );
+  }
 
   return (
     <section>
