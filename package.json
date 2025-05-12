@@ -1,9 +1,9 @@
 {
   "name": "milky-way",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "milky-way/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node milky-way/server.js",
     "dev": "nodemon milky-way/server.js"
   },
   "keywords": [],
