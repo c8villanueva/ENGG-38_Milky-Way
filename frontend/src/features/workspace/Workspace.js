@@ -142,7 +142,13 @@ export default function Workspace() {
   const startResize = (el, id) => e => {
     e.stopPropagation(); const startX = e.clientX, startY = e.clientY;
     const rect = el.getBoundingClientRect(); const initW = rect.width, initH = rect.height;
-    const onMove = ev => updateElement(id, { style: { ...elements.find(x => x.id === id).style, width: `${initW + ev.clientX - startX}px`, height: `${initH + ev.clientY - startY}px` } });
+    const onMove = ev => updateElement(id, {
+      style: {
+        ...elements.find(x => x.id === id).style,
+        width: `${initW + ev.clientX - startX}px`,
+        height: `${initH + ev.clientY - startY}px`
+      }
+    });
     const onUp = () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
@@ -154,6 +160,8 @@ export default function Workspace() {
       position: 'absolute',
       ...el.style,
       cursor: 'grab',
+      display: 'flex',
+      flexDirection: 'column',
       overflow: 'hidden'
     };
     return (
@@ -216,7 +224,7 @@ export default function Workspace() {
               alert(message);
               return {
                 ...prev,
-                timeLeft: 0,
+                timeLeft: 1500,
                 isRunning: false,
                 isPaused: false
               };
@@ -271,7 +279,8 @@ export default function Workspace() {
           {!isRunning ? (
             <div className="top-row">
               <button onClick={() => start(1500, 'study')}>Study</button>
-              <button onClick={() => start(300, 'break')}>Break</button>
+              {/* for demo purposes, changed 300 (5 mins) to 3 seconds */}
+              <button onClick={() => start(3, 'break')}>Break</button> 
             </div>
           ) : (
             <div className="bottom-row">
@@ -333,7 +342,7 @@ export default function Workspace() {
     };
 
     return (
-      <div>
+      <div className='list'>
         <div className="todo-container">
           <div className="todo-inputs">
             <input
@@ -341,6 +350,9 @@ export default function Workspace() {
               type="text"
               value={inputText}
               onChange={e => setInputText(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') addItem();
+              }}
               placeholder="Add task here"
             />
             <input
