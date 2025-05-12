@@ -26,6 +26,7 @@ const allowedOrigins = [
   //fake urls for now, add frontend later
   'https://www.dandrepairshop.com',
   'https://dandreparishop.com',
+  'https://milky-way-kdio.onrender.com'
 ]
 const corsOptions = {
   origin: (origin, callback) => {
