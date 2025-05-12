@@ -164,17 +164,17 @@ export default function Workspace() {
             onBlur={e => updateElement(el.id, { content: e.target.innerText })}
             className='text'
             style={{ margin: 0, color: el.textColor, backgroundColor: 'transparent' }}>
-            
+
             {el.content}
           </p>
         )}
 
         {el.type === 'timer' && <Timer id={el.id} element={el} updateElement={updateElement} />}
-        
+
         {el.type === 'list' && <TodoList id={el.id} listItems={el.listItems} updateElement={updateElement} />}
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
-          <input 
+          <input
             type="color"
             className='color-picker'
             value={el.type === 'text' ? el.textColor : el.color}
@@ -291,6 +291,11 @@ export default function Workspace() {
     const [inputDate, setInputDate] = useState("");
     const inputRef = useRef(null);
 
+    useEffect(() => {
+      setInputDate(new Date().toISOString().split('T')[0]);
+    }, []);
+
+
     const addItem = () => {
       const trimmedText = inputText.trim();
       if (!trimmedText || !inputDate) return;
@@ -330,33 +335,46 @@ export default function Workspace() {
 
     return (
       <div>
-        <div style={{ display: 'flex', gap: '5px' }}>
-          <input
-            ref={inputRef}
-            value={inputText}
-            onChange={e => setInputText(e.target.value)}
-            placeholder="Add task here"
-          />
-          <input
-            type="date"
-            value={inputDate}
-            onChange={e => setInputDate(e.target.value)}
-          />
-          <button onClick={addItem}>+</button>
+        <div className="todo-container">
+          <div className="todo-inputs">
+            <input
+              ref={inputRef}
+              type="text"
+              value={inputText}
+              onChange={e => setInputText(e.target.value)}
+              placeholder="Add task here"
+            />
+            <input
+              type="date"
+              value={inputDate}
+              onChange={e => setInputDate(e.target.value)}
+            />
+          </div>
+          <button onClick={addItem} className="todo-add-button">+</button>
         </div>
-        <ul>
-          {listItems.map(item => (
-            <li key={item.id} style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
-              <input
-                type="checkbox"
-                checked={item.completed}
-                onChange={() => toggleCheck(item.id)}
-              />
-              {item.text} – <em>{item.date}</em>
-              <button onClick={() => deleteItem(item.id)}>x</button>
-            </li>
-          ))}
-        </ul>
+
+        <div className="todo-scroll">
+          <ul className="todo-list">
+            {[...listItems]
+              .sort((a, b) => new Date(a.date) - new Date(b.date))
+              .map(item => (
+              <li key={item.id} className="todo-item" style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
+                <div className="todo-left">
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={() => toggleCheck(item.id)}
+                  />
+                  {item.text}
+                </div>
+                <div className="todo-right">
+                  <em>{new Date(item.date).toLocaleDateString('en-US')}</em>
+                  <button onClick={() => deleteItem(item.id)} className="todo-delete">x</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -395,15 +413,15 @@ export default function Workspace() {
           </ul>
         </div>
       </nav>
-      
+
       <div ref={workspaceRef} className="workspace" style={{
         position: 'relative',
         width: '100%',
-        height: '80vh',
+        height: '85vh',
         overflow: 'hidden',
         backgroundImage:
-          isGrid 
-            ? 'radial-gradient(circle,#aaa 1px,transparent 1px)' 
+          isGrid
+            ? 'radial-gradient(circle,#aaa 1px,transparent 1px)'
             : 'linear-gradient(to right,#ccc 1px,transparent),(to bottom,#ccc 1px,transparent)',
         backgroundSize: '20px 20px'
       }}>

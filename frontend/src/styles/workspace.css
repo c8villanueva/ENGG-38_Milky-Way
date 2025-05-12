@@ -146,7 +146,7 @@
 
 .element:hover .delete-element {
     display: block;
-  }
+}
 
 .element .delete-element:hover {
     background-color: lightcoral;
@@ -167,7 +167,7 @@
 
 .element:hover .resizer {
     display: block;
-  }
+}
 
 .element .resizer:hover {
     background-color: #aaa;
@@ -175,19 +175,21 @@
 
 /* text box */
 .text {
+    z-index: 999;
     min-width: 40px;
     min-height: 40px;
 }
 
 /* shape box */
 .square {
+    z-index: 1;
     min-width: 40px;
     min-height: 40px;
 }
 
 /* timer */
 .timer {
-    z-index: 0;
+    z-index: 1;
     min-width: 230px;
     min-height: 170px;
 }
@@ -242,4 +244,112 @@
 
 .timer-btns button:hover {
     background-color: #aaa;
+}
+
+/* list */
+.list {
+    z-index: 0;
+    min-width: 200px;
+    min-height: 170px;
+    max-height: 450px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.todo-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.todo-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.todo-inputs input[type="text"],
+.todo-inputs input[type="date"] {
+    padding: 4px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.todo-add-button {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    background-color: white;
+    color: black;
+    border-radius: 6px;
+    cursor: pointer;
+    height: 56px;
+}
+
+.todo-add-button:hover {
+    background-color: #ddd;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.todo-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  min-height: 0;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 13px;
+    background-color: white;
+    opacity: 80%;
+    padding: 4px 6px;
+    border-radius: 4px;
+    word-break: break-word;
+}
+
+.todo-item:hover {
+    background-color: #ddd;
+}
+
+.todo-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.todo-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.todo-delete {
+    background: none;
+    border: none;
+    color: #c00;
+    font-weight: bold;
+    cursor: pointer;
 }
