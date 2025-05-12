@@ -224,7 +224,7 @@ export default function Workspace() {
               alert(message);
               return {
                 ...prev,
-                timeLeft: 0,
+                timeLeft: 1500,
                 isRunning: false,
                 isPaused: false
               };
@@ -279,7 +279,8 @@ export default function Workspace() {
           {!isRunning ? (
             <div className="top-row">
               <button onClick={() => start(1500, 'study')}>Study</button>
-              <button onClick={() => start(300, 'break')}>Break</button>
+              {/* for demo purposes, changed 300 (5 mins) to 3 seconds */}
+              <button onClick={() => start(3, 'break')}>Break</button> 
             </div>
           ) : (
             <div className="bottom-row">
