@@ -23,7 +23,7 @@ app.use(logger)
 // placing everything in this file for now for easier troubleshooting later
 const allowedOrigins = [
   'http://localhost:3000', //for development, where the frontend will be
-  //fake urls for now
+  //fake urls for now, add frontend later
   'https://www.dandrepairshop.com',
   'https://dandreparishop.com',
 ]

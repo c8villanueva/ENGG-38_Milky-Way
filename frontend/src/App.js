@@ -19,11 +19,11 @@ function App() {
         {/* <Route index element={<Landing />} /> ^ this will be the default */}
 
         {/* protected routes */}
-        {/* <Route element={<PersistLogin />}> */}
+        <Route element={<PersistLogin />}>
           <Route element={<Prefetch />}>
             <Route path="workspace" element={<Workspace />} />
           </Route>
-        {/* </Route> */}
+        </Route>
 
 
     </Routes>
