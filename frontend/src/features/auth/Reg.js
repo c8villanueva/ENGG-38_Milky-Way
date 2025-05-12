@@ -24,7 +24,7 @@ const Reg = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [roles, setRoles] = useState(["Employee"]);
+  const [roles, setRoles] = useState(["User"]);
 
   useEffect(() => {
     setValidName(NAME_REGEX.test(name));
@@ -172,7 +172,7 @@ const Reg = () => {
               placeholder="Password"
             />
 
-
+{/* 
             <select
               id="roles"
               name="roles"
@@ -183,7 +183,7 @@ const Reg = () => {
               onChange={onRolesChanged}
             >
               {options}
-            </select>
+            </select> */}
 
 
 
