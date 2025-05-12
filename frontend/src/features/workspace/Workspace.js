@@ -4,7 +4,6 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import { useSendLogoutMutation } from '../auth/authApiSlice';
 
-// import 'frontend/src/styles/workspace.css';
 import '../../styles/workspace.css'
 
 // const WORKSPACE_REGEX = /^\/workspace(\/)?$/
@@ -396,7 +395,7 @@ export default function Workspace() {
           </div>
 
           <ul className="navbar__menu">
-            <li><button className="button" onClick={changeLayout}>[]</button></li>
+            <li><button className="button" onClick={changeLayout}>{isGrid ? "[]" : "◯"}</button></li>
             <li><button className="button" onClick={() => addElement('text')}>text</button></li>
             <li><button className="button" onClick={() => addElement('square')}>square</button></li>
             <li><button className="button" onClick={() => addElement('timer')}>timer</button></li>
@@ -422,7 +421,7 @@ export default function Workspace() {
         backgroundImage:
           isGrid
             ? 'radial-gradient(circle,#aaa 1px,transparent 1px)'
-            : 'linear-gradient(to right,#ccc 1px,transparent),(to bottom,#ccc 1px,transparent)',
+            : 'linear-gradient(to right, #ccc 1px, transparent 1px), linear-gradient(to bottom, #ccc 1px, transparent 1px)',
         backgroundSize: '20px 20px'
       }}>
         {elements.map(renderElement)}

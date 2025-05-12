@@ -5,7 +5,7 @@
     font-family: "Inclusive Sans", serif;
 }
 
-/* Navbar styles */
+/* navbar */
 .navbar {
     background-color: #81689d;
     padding: 10px 20px;
@@ -180,7 +180,7 @@
     min-height: 40px;
 }
 
-/* shape box */
+/* square */
 .square {
     z-index: 1;
     min-width: 40px;
