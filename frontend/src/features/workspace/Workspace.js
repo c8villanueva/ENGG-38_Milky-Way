@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useSendLogoutMutation } from '../auth/authApiSlice';
 
 // import 'frontend/src/styles/workspace.css';
+import '../../styles/workspace.css'
 
 // const WORKSPACE_REGEX = /^\/workspace(\/)?$/
 
@@ -13,143 +14,6 @@ const defaultStyles = {
   top: '50px',
   left: '50px',
 };
-
-const navbarStyles = {
-  navbar: {
-    background: '#81689d',
-    height: '80px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '1.2rem',
-    position: 'sticky',
-    top: 0,
-    zIndex: 999,
-  },
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    height: '80px',
-    width: '100%',
-    margin: '0 auto',
-    padding: '0 50px',
-    alignItems: 'center',
-    zIndex: 1,
-  },
-  logo: {
-    backgroundColor: '#ffd0ec',
-    backgroundSize: '100%',
-    WebkitBackgroundClip: 'text',
-    MozBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    MozTextFillColor: 'transparent',
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    fontSize: '2rem',
-  },
-  menu: {
-    display: 'flex',
-    alignItems: 'center',
-    listStyle: 'none',
-    textAlign: 'center',
-    gap: '10px',
-    position: 'relative',
-  },
-  menuItem: {
-    position: 'relative',
-    // height: '80px',
-  },
-  link: {
-    color: '#ffd0ec',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textDecoration: 'none',
-    padding: '0 1rem',
-    height: '100%',
-    transition: 'color 0.3s ease',
-  },
-  // dropdownContainer: {
-  //     position: 'relative',
-  //   },
-  //   dropdownButton: {
-  //     display: 'flex',
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //     padding: '10px',
-  //     border: 'none',
-  //     background: '#ffd0ec',
-  //     cursor: 'pointer',
-  //   },
-  //   dropdownMenu: {
-  //         display: 'block',
-  //         position: 'absolute',
-  //         top: '100%',
-  //         right: 0,
-  //         backgroundColor: '#ffd0ec',
-  //         padding: '10px 0',
-  //         zIndex: 1000,
-  //       }
-  //   dropdownLink: {
-  //     padding: '8px 16px',
-  //     cursor: 'pointer',
-  //     textDecoration: 'none',
-  //     color: '#1f2544',
-  //   },
-  button: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textDecoration: 'none',
-    padding: '10px 10px',
-    margin: '0 0.15rem',
-    width: '100%',
-    border: 'none',
-    outline: 'none',
-    borderRadius: '20px',
-    background: '#ffd0ec',
-    color: '#1f2544',
-    cursor: 'pointer',
-  },
-}
-
-const elmenuStyles = {
-  deleteEl: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    backgroundColor: 'transparent',
-    color: 'black',
-    border: 'none',
-    width: '20px',
-    height: '20px',
-    cursor: 'pointer',
-    zIndex: 2,
-  },
-  pickcolor: {
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    top: 0,
-    right: '20px',
-    zIndex: 2,
-    border: 'none',
-    width: '20px',
-    height: '20px',
-    cursor: 'pointer',
-  },
-  resizer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    height: '20px',
-    width: '20px',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    border: 'none',
-  },
-}
 
 export default function Workspace() {
 
@@ -204,7 +68,7 @@ export default function Workspace() {
     setIsGrid(prev => !prev);
   };
 
-  //settings
+  // settings
   const clearWorkspace = () => {
     if (window.confirm('Clear workspace?')) {
       setElements([]);
@@ -221,7 +85,7 @@ export default function Workspace() {
     if (saved) setElements(JSON.parse(saved));
   };
 
-  //elements
+  // presets
   const addElement = (type) => {
     const id = uuidv4();
     setElements(prev => [...prev, {
@@ -231,8 +95,8 @@ export default function Workspace() {
       listItems: [],
       style: {
         ...defaultStyles,
-        width: type === 'circle' || type === 'square' ? '50px' : undefined,
-        height: type === 'circle' || type === 'square' ? '50px' : undefined,
+        width: type === 'square' ? '50px' : undefined,
+        height: type === 'square' ? '50px' : undefined,
         backgroundColor: type === 'text' ? 'transparent' : '#ccc'
       },
       color: '#ccc',
@@ -256,7 +120,7 @@ export default function Workspace() {
     }
   };
 
-  //drag
+  // drag
   const makeDraggable = (id) => ({
     onMouseDown: e => {
       const target = e.target;
@@ -275,7 +139,7 @@ export default function Workspace() {
     }
   });
 
-  // Resize
+  // resize
   const startResize = (el, id) => e => {
     e.stopPropagation(); const startX = e.clientX, startY = e.clientY;
     const rect = el.getBoundingClientRect(); const initW = rect.width, initH = rect.height;
@@ -285,13 +149,12 @@ export default function Workspace() {
     window.addEventListener('mouseup', onUp);
   };
 
-  // Render
+  // render
   const renderElement = el => {
     const style = {
       position: 'absolute',
       ...el.style,
       cursor: 'grab',
-      borderRadius: el.type === 'circle' ? '50%' : undefined,
       overflow: 'hidden'
     };
     return (
@@ -299,7 +162,9 @@ export default function Workspace() {
         {el.type === 'text' && (
           <p contentEditable suppressContentEditableWarning
             onBlur={e => updateElement(el.id, { content: e.target.innerText })}
+            className='text'
             style={{ margin: 0, color: el.textColor, backgroundColor: 'transparent' }}>
+            
             {el.content}
           </p>
         )}
@@ -307,85 +172,87 @@ export default function Workspace() {
         {el.type === 'list' && <TodoList id={el.id} content={el.content} updateElement={updateElement} />}
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
-          <input type="color"
+          <input 
+            type="color"
+            className='color-picker'
             value={el.type === 'text' ? el.textColor : el.color}
-            style={elmenuStyles.pickcolor}
             onClick={e => e.stopPropagation()}
             onChange={e => {
               if (el.type === 'text') updateElement(el.id, { textColor: e.target.value });
               else updateElement(el.id, { style: { ...el.style, backgroundColor: e.target.value }, color: e.target.value });
             }}
           />
-          <button onClick={() => deleteElement(el.id)} style={elmenuStyles.deleteEl}>x</button>
-          <button className="resize-handle" onMouseDown={startResize(document.getElementById(el.id), el.id)} style={elmenuStyles.resizer}>+</button>
+          <button onClick={() => deleteElement(el.id)} className='delete-element'>x</button>
+          <button className="resizer" onMouseDown={startResize(document.getElementById(el.id), el.id)}>+</button>
         </div>
       </div>
     );
   };
 
-
-  //timer
+  // timer
   function Timer({ id, element, updateElement }) {
     const intervalRef = useRef(null);
-    const { timeLeft = 1500, isRunning = false, isPaused = false } = element;
+    const { timeLeft = 1500, isRunning = false, isPaused = false } = element || {};
 
     useEffect(() => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
 
-      if (isRunning && !isPaused) {
-        intervalRef.current = setInterval(() => {
-          updateElement(id, prev => {
-            const currentTime = prev.timeLeft ?? 1500;
-            if (currentTime <= 1) {
-              clearInterval(intervalRef.current);
-              const message = prev.sessionType === 'study'
-                ? 'Study session done! Time for a break.'
-                : 'Break is over! Time to get back to work.';
-              alert(message);
-              return {
-                ...prev,
-                timeLeft: 0,
-                isRunning: false
-              };
-            }
-            return {
-              ...prev,
-              timeLeft: currentTime - 1
-            };
-          });
-        }, 1000);
-      }
+        if (isRunning && !isPaused) {
+            intervalRef.current = setInterval(() => {
+                updateElement(id, prev => {
+                    const currentTime = prev.timeLeft ?? 1500;
+                    if (currentTime <= 1) {
+                        clearInterval(intervalRef.current);
+                        const message = prev.sessionType === 'study'
+                            ? 'Study session done! Time for a break.'
+                            : 'Break is over! Time to get back to work.';
+                        alert(message);
+                        return {
+                            ...prev,
+                            timeLeft: 0,
+                            isRunning: false,
+                            isPaused: false // Reset paused state when timer ends
+                        };
+                    }
+                    return {
+                        ...prev,
+                        timeLeft: currentTime - 1
+                    };
+                });
+            }, 1000);
+        }
 
-      return () => clearInterval(intervalRef.current);
+        return () => clearInterval(intervalRef.current);
     }, [isRunning, isPaused, id, updateElement]);
 
     const start = (duration, type) => {
-      updateElement(id, prev => ({
-        ...prev,
-        timeLeft: duration,
-        sessionType: type,
-        isRunning: true,
-        isPaused: false
-      }));
+        updateElement(id, prev => ({
+            ...prev,
+            timeLeft: duration,
+            sessionType: type,
+            isRunning: true,
+            isPaused: false
+        }));
     };
 
     const togglePause = () => {
-      updateElement(id, prev => ({
-        ...prev,
-        isPaused: !prev.isPaused
-      }));
+        updateElement(id, prev => ({
+            ...prev,
+            isPaused: !prev.isPaused
+        }));
     };
 
     const reset = () => {
-      clearInterval(intervalRef.current);
-      updateElement(id, prev => ({
-        ...prev,
-        timeLeft: 1500,
-        isRunning: false,
-        isPaused: false
-      }));
+        clearInterval(intervalRef.current);
+        updateElement(id, prev => ({
+            ...prev,
+            timeLeft: 1500,
+            isRunning: false,
+            isPaused: false,
+            sessionType: null // Reset session type on reset
+        }));
     };
 
     const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
@@ -412,8 +279,7 @@ export default function Workspace() {
     );
   }
 
-
-  //list
+  //list with due date
   function TodoList({ id, content, updateElement }) {
   const [items, setItems] = useState(() => {
     try {
@@ -437,12 +303,21 @@ export default function Workspace() {
 
   const addItem = () => {
     const trimmedText = inputText.trim();
-    if (!trimmedText || items.some(item => item.text === trimmedText)) return;
-    setItems(prev => [...prev, { text: trimmedText, date: inputDate, checked: false }]);
+    if (!trimmedText || !inputDate) return;
+
+    const newItem = {
+      id: uuidv4(),
+      text: trimmedText,
+      date: inputDate,
+      completed: false,
+    };
+
+    setItems(prev => [...prev, newItem]);
     setInputText("");
     setInputDate("");
-    inputRef.current?.focus();
+    if (inputRef.current) inputRef.current.focus();
   };
+
 
   const toggleCheck = index => {
     setItems(prev =>
@@ -457,56 +332,37 @@ export default function Workspace() {
   };
 
   return (
-    <div className="list-container p-2 space-y-2"
-         onMouseDown={e => e.stopPropagation()}
-         onTouchStart={e => e.stopPropagation()}>
-      <div className="flex gap-2">
+    <div>
+      <div style={{ display: 'flex', gap: '5px' }}>
         <input
-          className="todo-input border rounded p-1 w-full"
-          type="text"
-          placeholder="Add new item..."
+          ref={inputRef}
           value={inputText}
           onChange={e => setInputText(e.target.value)}
-          onKeyDown={e => {
-            e.stopPropagation();
-            if (e.key === "Enter") addItem();
-          }}
-          onMouseDown={e => e.stopPropagation()}
-          ref={inputRef}
+          placeholder="Add task here"
         />
         <input
-          className="date-input border rounded p-1"
           type="date"
           value={inputDate}
           onChange={e => setInputDate(e.target.value)}
-          onMouseDown={e => e.stopPropagation()}
         />
-        <button
-          onClick={e => { e.stopPropagation(); addItem(); }}
-          className="addBtn px-3 text-xl rounded bg-blue-500 text-white"
-        >
-          +
-        </button>
+        <button onClick={addItem}>+</button>
       </div>
-      <ul className="todo-list space-y-1">
-        {items.map((item, index) => (
-          <li
-            key={index}
-            className={`flex justify-between items-center px-2 py-1 border rounded cursor-pointer ${item.checked ? "line-through text-gray-500" : ""}`}
-            onClick={() => toggleCheck(index)}
-          >
-            <span className="item-text">
-              {item.text}{item.date && ` - Due: ${item.date}`}
-            </span>
-            <span
-              className="delBtn ml-4 text-red-500 hover:text-red-700 text-xl"
-              onClick={e => {
-                e.stopPropagation();
-                deleteItem(index);
-              }}
-            >
-              &times;
-            </span>
+      <ul>
+        {items.map(item => (
+          <li key={item.id} style={{ textDecoration: item.completed ? 'line-through' : 'none' }}>
+            <input
+              type="checkbox"
+              checked={item.completed}
+              onChange={() =>
+                setItems(prev =>
+                  prev.map(i =>
+                    i.id === item.id ? { ...i, completed: !i.completed } : i
+                  )
+                )
+              }
+            />
+            {item.text} – <em>{item.date}</em>
+            <button onClick={() => setItems(prev => prev.filter(i => i.id !== item.id))}>Delete</button>
           </li>
         ))}
       </ul>
@@ -518,35 +374,37 @@ export default function Workspace() {
     <section>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"></link>
 
-      <nav className="navbar" style={navbarStyles.navbar}>
-        <div className="navbar__container" style={navbarStyles.container}>
-          {/* <a href="/" id="navbar__logo">
-            <i className="fa-solid fa-rocket">&nbsp;</i> Milky Way
-          </a> */}
-          <li id="navbar__logo" style={navbarStyles.logo}>
+      <nav className="navbar">
+        <div className="navbar__container">
+          <li id="navbar__logo">
             <Link to="/">Milky Way</Link>
           </li>
-          <ul className="navbar__menu" style={navbarStyles.menu}>
 
-            <li><button onClick={changeLayout} style={navbarStyles.button}>[]</button></li>
-            
-            <li><button onClick={() => addElement('text')} style={navbarStyles.button}>text</button></li>
-            <li><button onClick={() => addElement('square')} style={navbarStyles.button}>square</button></li>
-            <li><button onClick={() => addElement('timer')} style={navbarStyles.button}>timer</button></li>
-            <li><button onClick={() => addElement('list')} style={navbarStyles.button}>list</button></li>
-            {/* <li className="navbar__dropdown"><button style={navbarStyles.button}>⚙️</button>
-              <div className="navbar__dropdown-content"> */}
-                <li><button onClick={clearWorkspace} style={navbarStyles.button}>clear</button></li>
-                <li><button onClick={saveWorkspace} style={navbarStyles.button}>save</button></li>
-                {/* <button onClick={loadWorkspace} style={navbarStyles.button}>load</button> */}
-                {/* <button onClick={sendLogout}>logout</button> */}
-                <li><button onClick={handleLogout} style={navbarStyles.button}>logout</button></li>
-                {/* <button onClick={async () => await sendLogout()}>logout</button> */}
-              {/* </div>
-            </li> */}
+          <div className="navbar__toggle" id="mobile-menu">
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+
+          <ul className="navbar__menu">
+            <li><button className="button" onClick={changeLayout}>[]</button></li>
+            <li><button className="button" onClick={() => addElement('text')}>text</button></li>
+            <li><button className="button" onClick={() => addElement('square')}>square</button></li>
+            <li><button className="button" onClick={() => addElement('timer')}>timer</button></li>
+            <li><button className="button" onClick={() => addElement('list')}>list</button></li>
+
+            <li className="navbar__dropdown-parent">
+              <button className="button">⚙️</button>
+              <ul className="navbar__dropdown">
+                <li><button className="button" onClick={clearWorkspace}>clear</button></li>
+                <li><button className="button" onClick={saveWorkspace}>save</button></li>
+                <li><button className="button" onClick={handleLogout}>logout</button></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </nav>
+      
       <div ref={workspaceRef} className="workspace" style={{
         position: 'relative',
         width: '100%',
