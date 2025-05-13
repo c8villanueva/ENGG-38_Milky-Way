@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useSendLogoutMutation } from '../auth/authApiSlice';
 
 import '../../styles/workspace.css'
+import milkywayLogo from '../../images/rocket.png';
 
 // const WORKSPACE_REGEX = /^\/workspace(\/)?$/
 
@@ -167,13 +168,22 @@ export default function Workspace() {
     return (
       <div key={el.id} id={el.id} style={style} className={`element ${el.type}`} {...makeDraggable(el.id)}>
         {el.type === 'text' && (
-          <p contentEditable suppressContentEditableWarning
-            onBlur={e => updateElement(el.id, { content: e.target.innerText })}
-            className='text'
-            style={{ margin: 0, color: el.textColor, backgroundColor: 'transparent' }}>
-
-            {el.content}
-          </p>
+          <div className="text-container" style={{ flex: 1 }}>
+            <div
+              contentEditable
+              suppressContentEditableWarning
+              onBlur={e => updateElement(el.id, { content: e.target.innerText })}
+              className='text'
+              style={{
+                margin: 0,
+                color: el.textColor,
+                backgroundColor: 'transparent',
+                outline: 'none'
+              }}
+            >
+              {el.content}
+            </div>
+          </div>
         )}
 
         {el.type === 'timer' && <Timer id={el.id} element={el} updateElement={updateElement} />}
@@ -188,11 +198,16 @@ export default function Workspace() {
             onClick={e => e.stopPropagation()}
             onChange={e => {
               if (el.type === 'text') updateElement(el.id, { textColor: e.target.value });
-              else updateElement(el.id, { style: { ...el.style, backgroundColor: e.target.value }, color: e.target.value });
+              else updateElement(el.id, {
+                style: { ...el.style, backgroundColor: e.target.value },
+                color: e.target.value
+              });
             }}
           />
           <button onClick={() => deleteElement(el.id)} className='delete-element'>x</button>
-          <button className="resizer" onMouseDown={startResize(document.getElementById(el.id), el.id)}>+</button>
+          {(el.type === 'text' || el.type === 'square' || el.type === 'list') && (
+            <button className="resizer" onMouseDown={startResize(document.getElementById(el.id), el.id)}>+</button>
+          )}
         </div>
       </div>
     );
@@ -396,9 +411,10 @@ export default function Workspace() {
 
       <nav className="navbar">
         <div className="navbar__container">
-          <li id="navbar__logo">
-            <Link to="/">Milky Way</Link>
-          </li>
+          <div className="navbar__logo">
+            <img src={milkywayLogo} alt="Logo" className="navbar__logo-img" />
+            <Link to="/" className="navbar__logo-text">Milky Way</Link>
+          </div>
 
           <div className="navbar__toggle" id="mobile-menu">
             <span className="bar"></span>
