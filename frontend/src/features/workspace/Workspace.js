@@ -132,8 +132,16 @@ export default function Workspace() {
       e.stopPropagation(); const el = document.getElementById(id);
       const rect = el.getBoundingClientRect();
       const offsetX = e.clientX - rect.left, offsetY = e.clientY - rect.top;
-      const onMove = ev => updateElement(id, { style: { ...elements.find(x => x.id === id).style, left: `${ev.clientX - offsetX}px`, top: `${ev.clientY - offsetY}px` } });
-      const onUp = () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+      const onMove = ev => updateElement(id, { 
+        style: { 
+          ...elements.find(x => x.id === id).style, 
+          left: `${ev.clientX - offsetX}px`, 
+          top: `${ev.clientY - offsetY}px` 
+        } });
+      const onUp = () => { 
+        window.removeEventListener('mousemove', onMove); 
+        window.removeEventListener('mouseup', onUp); 
+      };
       window.addEventListener('mousemove', onMove);
       window.addEventListener('mouseup', onUp);
     }
@@ -150,7 +158,10 @@ export default function Workspace() {
         height: `${initH + ev.clientY - startY}px`
       }
     });
-    const onUp = () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+    const onUp = () => { 
+      window.removeEventListener('mousemove', onMove); 
+      window.removeEventListener('mouseup', onUp); 
+    };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
   };
@@ -308,7 +319,7 @@ export default function Workspace() {
     );
   }
 
-  //list with date
+  // list
   function TodoList({ id, listItems = [], updateElement }) {
     const [inputText, setInputText] = useState("");
     const [inputDate, setInputDate] = useState("");
