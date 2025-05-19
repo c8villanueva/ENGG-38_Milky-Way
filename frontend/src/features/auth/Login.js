@@ -12,6 +12,8 @@ import usePersist from '../../hooks/usePersist'
 
 import '../../styles/login.css'
 
+import milkywayLogo from '../../images/rocket.png';
+
 const Login = () => {
 
   const userRef = useRef()
@@ -70,22 +72,20 @@ const Login = () => {
     <section>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap"></link>
         
-      <nav class="navbar">
-        <div class="navbar__container">
-          {/* <a href="landing.html" id="navbar__logo">
-            <i class="fa-solid fa-rocket">&nbsp</i> Milky Way
-          </a> */}
-          <li id="navbar__logo">
-              <Link to="/">Milky Way</Link>
-          </li>
-          <div class="navbar__toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+      <nav className="navbar">
+        <div className="navbar__container">
+          <div className="navbar__logo">
+              <img src={milkywayLogo} alt="Logo" className="navbar__logo-img" />
+              <Link to="/" className="navbar__logo-text">Milky Way</Link>
           </div>
-          <ul class="navbar__menu">
-            <li class="navbar__btn">
-              <Link to="/" class="button">Home</Link>
+          <div className="navbar__toggle" id="mobile-menu">
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+          <ul className="navbar__menu">
+            <li className="navbar__btn">
+              <Link to="/" className="button">Home</Link>
             </li>
           </ul>
         </div>
@@ -95,8 +95,8 @@ const Login = () => {
       <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
 
-      {/* <div class="container">
-        <div class="form-box active" id="login-form">
+      {/* <div className="container">
+        <div className="form-box active" id="login-form">
           <form onSubmit={handleSubmit}>
             <h2>Login</h2>
 

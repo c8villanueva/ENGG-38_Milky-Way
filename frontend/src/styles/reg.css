@@ -29,22 +29,23 @@
   margin: 0 auto;
   padding: 0 50px;
 }
-#navbar__logo{
-  background-color: #ffd0ec;
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
+
+.navbar__logo {
   display: flex;
   align-items: center;
   cursor: pointer;
-  text-decoration: none;
   font-size: 2rem;
 }
 
-.fa-solid fa-dog {
-  margin-right: 0.5rem;
+.navbar__logo-img {
+  height: 40px; 
+  margin-right: 10px;
+}
+
+.navbar__logo-text {
+  color: #ffd0ec;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .navbar__menu {
