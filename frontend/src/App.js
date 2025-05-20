@@ -8,15 +8,10 @@ import PersistLogin from './features/auth/PersistLogin'
 
 function App() {
   return (
-    // <div className="App">
-    //   <h1>Milky Way</h1>
-    // </div>
     <Routes>
       <Route path="/" element={<Landing />}/>
       <Route path="auth" element={<Login />} />
       <Route path="users" element={<Reg />} />
-      
-        {/* <Route index element={<Landing />} /> ^ this will be the default */}
 
         {/* protected routes */}
         <Route element={<PersistLogin />}>

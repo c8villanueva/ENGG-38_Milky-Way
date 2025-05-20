@@ -7,8 +7,6 @@ import { useSendLogoutMutation } from '../auth/authApiSlice';
 import '../../styles/workspace.css'
 import milkywayLogo from '../../images/rocket.png';
 
-// const WORKSPACE_REGEX = /^\/workspace(\/)?$/
-
 const defaultStyles = {
   position: 'absolute',
   top: '50px',
@@ -45,11 +43,6 @@ export default function Workspace() {
   }, [isSuccess, navigate])
   if (isLoading) return <p>Logging Out...</p>
   if (isError) return <p>Error: {error.data?.message}</p>
-
-  // let dashClass = null
-  // if (!WORKSPACE_REGEX.test(pathname)) {
-  //   dashClass = "dash-header__container--small"
-  // }
 
   const handleLogout = async () => {
     try {

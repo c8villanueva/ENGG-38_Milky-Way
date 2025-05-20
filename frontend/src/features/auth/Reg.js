@@ -115,20 +115,13 @@ const Reg = () => {
         </div>
       </nav>
 
-
       <p className={errClass}>{error?.data?.message}</p>
-
 
       <div className="container">
         <div className="form-box active" id="signup-form">
 
-
-
-
-
           <form onSubmit={onSaveUserClicked}>
             <h2>Sign Up</h2>
-            {/* <input type="text" name="name" placeholder="Name" required /> */}
 
             <input
               className={`form__input ${validNameClass}`}
@@ -141,8 +134,6 @@ const Reg = () => {
               placeholder="Name"
             />
 
-            {/* <input type="email" name="email" placeholder="Email" required /> */}
-
             <input
               className={`form__input ${validEmailClass}`}
               id="email"
@@ -154,13 +145,6 @@ const Reg = () => {
               placeholder="Email"
             />
 
-            {/* <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            /> */}
-
             <input
               className={`form__input ${validPwdClass}`}
               id="password"
@@ -171,26 +155,7 @@ const Reg = () => {
               onChange={onPasswordChanged}
               placeholder="Password"
             />
-
-{/* 
-            <select
-              id="roles"
-              name="roles"
-              className={`form__select ${validRolesClass}`}
-              multiple={true}
-              size="1"
-              value={roles}
-              onChange={onRolesChanged}
-            >
-              {options}
-            </select> */}
-
-
-
-
-
             <button
-              //className="icon-button"
               title="Save"
               disabled={!canSave}
             >Sign Up
@@ -199,30 +164,6 @@ const Reg = () => {
               Already have an account? <Link to="/auth">Log In</Link>
             </p>
           </form>
-
-
-          
-          {/* <form action="">
-            <h2>Sign Up</h2>
-            <input type="text" name="name" placeholder="Name" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <button type="submit" name="signup">
-              Sign Up
-            </button>
-            <p>
-              Already have an account? <a href="login.html">Login</a>
-            </p>
-          </form> */}
-
-
-
-
         </div>
       </div>
     </section>

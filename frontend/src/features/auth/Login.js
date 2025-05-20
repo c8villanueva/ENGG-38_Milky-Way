@@ -1,5 +1,4 @@
 import React from 'react'
-//import '../../styles/reg.css'
 
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
@@ -94,52 +93,6 @@ const Login = () => {
       
       <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
-
-      {/* <div className="container">
-        <div className="form-box active" id="login-form">
-          <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
-
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="Email" 
-              ref={userRef}
-              value={email}
-              onChange={handleEmailInput}
-              autoComplete="off"
-              required
-            />
-
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="Password" 
-              onChange={handlePwdInput}
-              value={password}
-              required
-            />
-
-
-            <button type="submit" name="login">Login</button>
-
-            <label htmlFor="persist" className="form__persist">
-              <input
-                type="checkbox"
-                className="form__checkbox"
-                id="persist"
-                onChange={handleToggle}
-                checked={persist}
-              />
-              Trust This Device
-            </label>
-
-            <p>
-              Don't have an account? <Link to="/users">Sign Up</Link>
-            </p>
-          </form>
-        </div>
-      </div> */}
 
 <div className="container">
   <div className="form-box active" id="login-form">

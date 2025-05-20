@@ -19,8 +19,6 @@ connectDB()
 app.use(logger)
 
 // Cross-Origin Resource Sharing  - for security
-// tbh the deployment issue might be coming from here so we'll see
-// placing everything in this file for now for easier troubleshooting later
 const allowedOrigins = [
   'http://localhost:3000', //for development, where the frontend will be
   'https://milky-way-kdio.onrender.com'
